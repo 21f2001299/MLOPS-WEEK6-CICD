@@ -15,6 +15,7 @@ spec:
       containers:
       - name: iris-api
         image: IMAGE_PLACEHOLDER  # <- this will be replaced in workflow
+        imagePullPolicy: Always   # <- Ensures latest image is always pulled
         ports:
         - containerPort: 8200
 ---
@@ -30,3 +31,4 @@ spec:
     port: 80
     targetPort: 8200
   type: LoadBalancer
+
