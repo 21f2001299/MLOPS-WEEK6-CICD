@@ -1,0 +1,37 @@
+name: Deploy to Production
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [prod]
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Google Cloud credentials
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_PROD_SA_KEY }}
+
+    - name: Configure Docker for Artifact Registry
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t iris-api .
+        docker tag iris-api us-central1-docker.pkg.dev/YOUR_PROJECT/iris-repo/iris-api:prod
+        docker push us-central1-docker.pkg.dev/YOUR_PROJECT/iris-repo/iris-api:prod
+
+    - name: Set up kubectl for prod cluster
+      run: |
+        gcloud container clusters get-credentials iris-prod-cluster --zone us-central1-c --project YOUR_PROJECT
+
+    - name: Deploy to Production
+      run: |
+        sed "s|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/YOUR_PROJECT/iris-repo/iris-api:prod|" iris-deployment-template.yaml > iris-deployment.yaml
+        kubectl apply -f iris-deployment.yaml
