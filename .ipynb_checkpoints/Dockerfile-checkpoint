@@ -27,4 +27,4 @@ COPY . .
 EXPOSE 8080
 
 # Run the FastAPI app with Uvicorn
-CMD ["uvicorn", "iris_fastapi:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "iris_fastapi:app", "--host", "0.0.0.0", "--port", "8200"]
