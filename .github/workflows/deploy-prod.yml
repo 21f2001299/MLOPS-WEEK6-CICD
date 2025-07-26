@@ -31,11 +31,13 @@ jobs:
       run: |
         gcloud container clusters get-credentials iris-prod-cluster --zone us-central1-c --project mystic-song-461103-u9
 
-    - name: Configure gke-gcloud-auth-plugin for kubectl
+    - name: Install gke-gcloud-auth-plugin (via official Google Cloud SDK)
       run: |
-        sudo apt-get update && sudo apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
+        curl -sSL https://sdk.cloud.google.com | bash
+        echo "$HOME/google-cloud-sdk/bin" >> $GITHUB_PATH
+        source "$HOME/google-cloud-sdk/path.bash.inc"
+        gcloud components install gke-gcloud-auth-plugin --quiet
         echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
-
 
     - name: Deploy to Production
       run: |
