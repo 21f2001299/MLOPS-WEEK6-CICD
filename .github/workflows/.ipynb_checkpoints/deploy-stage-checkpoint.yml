@@ -31,9 +31,8 @@ jobs:
 
     - name: Configure gke-gcloud-auth-plugin for kubectl
       run: |
-        mkdir -p ~/.kube
-        gcloud components install gke-gcloud-auth-plugin --quiet
-        echo "export USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+        sudo apt-get update && sudo apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
+        echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
 
     - name: Deploy to Staging
       run: |
