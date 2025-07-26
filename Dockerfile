@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose port (for GKE or local testing)
-EXPOSE 8080
+EXPOSE 8200
 
 # Run the FastAPI app with Uvicorn
 CMD ["uvicorn", "iris_fastapi:app", "--host", "0.0.0.0", "--port", "8200"]
