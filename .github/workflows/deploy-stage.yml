@@ -22,14 +22,14 @@ jobs:
     - name: Build and Push Docker Image
       run: |
         docker build -t iris-api .
-        docker tag iris-api us-central1-docker.pkg.dev/YOUR_PROJECT/iris-repo/iris-api:stage
-        docker push us-central1-docker.pkg.dev/YOUR_PROJECT/iris-repo/iris-api:stage
+        docker tag iris-api us-central1-docker.pkg.dev/mystic-song-461103-u9/iris-repo/iris-api:stage
+        docker push us-central1-docker.pkg.dev/mystic-song-461103-u9/iris-repo/iris-api:stage
 
     - name: Set up kubectl for staging cluster
       run: |
-        gcloud container clusters get-credentials iris-staging-cluster --zone us-central1-c --project YOUR_PROJECT
+        gcloud container clusters get-credentials iris-staging-cluster --zone us-central1-c --project mystic-song-461103-u9
 
     - name: Deploy to Staging
       run: |
-        sed "s|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/YOUR_PROJECT/iris-repo/iris-api:stage|" iris-deployment-template.yaml > iris-deployment.yaml
+        sed "s|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/mystic-song-461103-u9/iris-repo/iris-api:stage|" iris-deployment-template.yaml > iris-deployment.yaml
         kubectl apply -f iris-deployment.yaml
