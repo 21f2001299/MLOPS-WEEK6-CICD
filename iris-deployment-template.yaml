@@ -12,12 +12,25 @@ spec:
       labels:
         app: iris-api
     spec:
+      serviceAccountName: telemetry-access  # Optional: if using Google Cloud auth
       containers:
       - name: iris-api
         image: IMAGE_PLACEHOLDER
         imagePullPolicy: Always
         ports:
         - containerPort: 8200
+        readinessProbe:
+          httpGet:
+            path: /ready_check
+            port: 8200
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /live_check
+            port: 8200
+          initialDelaySeconds: 15
+          periodSeconds: 20
         resources:
           requests:
             cpu: 100m
