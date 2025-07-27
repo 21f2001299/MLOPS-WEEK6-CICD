@@ -12,7 +12,7 @@ import json
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+from opentelemetry.exporter.google.cloud_trace import CloudTraceSpanExporter
 
 # Setup Tracer
 trace.set_tracer_provider(TracerProvider())
