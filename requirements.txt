@@ -4,5 +4,6 @@ pandas
 numpy
 scikit-learn
 joblib
-opentelemetry-sdk
-opentelemetry-exporter-google-cloud
+opentelemetry-api==1.17.0
+opentelemetry-sdk==1.17.0
+opentelemetry-exporter-google-cloud==1.2.0
